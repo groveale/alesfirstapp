@@ -40,6 +40,10 @@
                 Command="{Binding Binding RefreshCommand}"
                 Text="Refresh List"
                 TextColor="White" />
+        <Button BackgroundColor="Teal"
+                Command="{Binding AddNewFileCommand}"
+                Text="Upload File"
+                TextColor="White" />
       </StackLayout>
     </StackLayout>
   </ContentPage.Content>

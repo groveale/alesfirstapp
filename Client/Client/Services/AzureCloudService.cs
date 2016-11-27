@@ -19,7 +19,7 @@ namespace Client.Services
 
         public AzureCloudService()
         {
-            client = new MobileServiceClient("http://alesfirstapp.azurewebsites.net");
+            client = new MobileServiceClient("https://alesfirstapp.azurewebsites.net");
         }
         public MobileServiceClient GetMobileClient()
         {

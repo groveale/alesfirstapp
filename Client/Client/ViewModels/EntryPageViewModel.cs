@@ -19,6 +19,9 @@ namespace Client.ViewModels
         Command loginCmd;
         public Command LoginCommand => loginCmd ?? (loginCmd = new Command(async () => await ExecuteLoginCommand()));
 
+
+        public IPlatform PlatformProvider => DependencyService.Get<IPlatform>();
+
         async Task ExecuteLoginCommand()
         {
             if (IsBusy)

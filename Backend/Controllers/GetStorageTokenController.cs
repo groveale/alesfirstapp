@@ -12,19 +12,20 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.Azure.Mobile.Server.Config;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System.Security.Claims;
+using System.Configuration;
 
 namespace Backend.Controllers
 {
-    
-    [Route("api/GetStorageToken")]
+    [Route("api/getstoragetoken")]
     public class GetStorageTokenController : ApiController
     {
         private const string connString = "MS_AzureStorageAccountConnectionString";
+        private const string localConnString = "LOCALMS_AzureStorageAccountConnectionString";
 
         public GetStorageTokenController()
         {
-            ConnectionString = Environment.GetEnvironmentVariable(connString);
-            StorageAccount = CloudStorageAccount.Parse("UseDevelopmentStorage=true");
+            ConnectionString = ConfigurationManager.AppSettings[connString];
+            StorageAccount = CloudStorageAccount.Parse(ConnectionString);
             BlobClient = StorageAccount.CreateCloudBlobClient();
         }
 
@@ -40,8 +41,8 @@ namespace Backend.Controllers
         public async Task<StorageTokenViewModel> GetAsync()
         {
             // The userId is the SID without the sid: prefix
-           // var claimsPrincipal = User as ClaimsPrincipal;
-            //var userId = claimsPrincipal
+            //var claimsPrincipal = User as ClaimsPrincipal;
+           // var userId = claimsPrincipal
             //    .FindFirst(ClaimTypes.NameIdentifier)
             //    .Value.Substring(4);
 
@@ -50,7 +51,7 @@ namespace Backend.Controllers
             await container.CreateIfNotExistsAsync();
 
             // Get the user directory within the container
-            var directory = container.GetDirectoryReference("TEST");
+            var directory = container.GetDirectoryReference("ales");
             var blobName = Guid.NewGuid().ToString("N");
             var blob = directory.GetBlockBlobReference(blobName);
 

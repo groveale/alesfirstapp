@@ -1,13 +1,16 @@
 ﻿using Client.Abstractions;
 using Client.Model;
 using System;
+using Microsoft.WindowsAzure.Storage;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Client.ViewModels
 {
@@ -16,6 +19,9 @@ namespace Client.ViewModels
         public TaskListViewModel()
         {
             Title = "Task List";
+
+            AddNewFileCommand = new Command(async () => await AddNewFileAsync());
+
             RefreshList();
         }
 
@@ -99,7 +105,57 @@ namespace Client.ViewModels
             }
         }
 
-       
+        // <summary>
+        /// Reference to the Platform Provider
+        /// </summary>
+        public IPlatform PlatformProvider => DependencyService.Get<IPlatform>();
+
+        /// <summary>
+        /// Bindable property for the AddNewFile Command
+        /// </summary>
+        public ICommand AddNewFileCommand { get; }
+
+        /// <summary>
+        /// User clicked on the Add New File button
+        /// </summary>
+        private async Task AddNewFileAsync()
+        {
+            if (IsBusy)
+            {
+                return;
+            }
+            IsBusy = true;
+
+            try
+            {
+                // Get a stream for the file
+                
+                var mediaStream = await PlatformProvider.GetUploadFileAsync();
+                if (mediaStream == null)
+                {
+                    IsBusy = false;
+                    return;
+                }
+
+                var cloudService = App.CloudService;
+
+                // Get the SAS token from the backend
+                var storageToken = await cloudService.GetSasTokenAsync();
+
+                // Use the SAS token to upload the file
+                var storageUri = new Uri($"{storageToken.Uri}{storageToken.SasToken}");
+                var blobStorage = new CloudBlockBlob(storageUri);
+                await blobStorage.UploadFromStreamAsync(mediaStream);
+            }
+            catch (Exception ex)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error Uploading File", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
 
         async Task RefreshList()
