@@ -15,7 +15,7 @@ namespace Client.Abstractions
         Task InitializeAsync();
         Task SyncOfflineCacheAsync();
 
-        Task<StorageTokenViewModel> GetSasTokenAsync();
+        Task<StorageTokenViewModel> GetSasTokenAsync(string directory, string fileName);
         MobileServiceClient GetMobileClient();
     }
 }

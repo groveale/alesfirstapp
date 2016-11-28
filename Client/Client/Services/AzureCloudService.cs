@@ -32,12 +32,17 @@ namespace Client.Services
             return new AzureCloudTable<T>(client);
         }
 
-        public async Task<StorageTokenViewModel> GetSasTokenAsync()
+        public async Task<StorageTokenViewModel> GetSasTokenAsync(string directory, string fileName)
         {
-            var parameters = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>()
+            {
+                { "directoryName", directory }, { "fileName", fileName }
+            };
             var storageToken = await client.InvokeApiAsync<StorageTokenViewModel>("GetStorageToken", HttpMethod.Get, parameters);
             return storageToken;
         }
+
+        
 
         #region Offline Sync Initialization
         public async Task InitializeAsync()

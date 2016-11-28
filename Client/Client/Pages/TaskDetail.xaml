@@ -18,6 +18,10 @@
           <Button BackgroundColor="Red"
                   Command="{Binding DeleteCommand}"
                   Text="Delete" TextColor="White"/>
+          <Button BackgroundColor="Teal"
+                  Command="{Binding AddNewFileCommand}"
+                  Text="Upload File"
+                  TextColor="White" />
         </StackLayout>
       </StackLayout>
     </StackLayout>

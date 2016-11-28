@@ -35,10 +35,11 @@ namespace Backend.Controllers
 
         public CloudBlobClient BlobClient { get; }
 
-        private const string containerName = "userdata";
+        private string containerName = "userdata";
+
 
         [HttpGet]
-        public async Task<StorageTokenViewModel> GetAsync()
+        public async Task<StorageTokenViewModel> GetAsync(string directoryName, string fileName)
         {
             // The userId is the SID without the sid: prefix
             //var claimsPrincipal = User as ClaimsPrincipal;
@@ -51,8 +52,8 @@ namespace Backend.Controllers
             await container.CreateIfNotExistsAsync();
 
             // Get the user directory within the container
-            var directory = container.GetDirectoryReference("ales");
-            var blobName = Guid.NewGuid().ToString("N");
+            var directory = container.GetDirectoryReference(directoryName);
+            var blobName = fileName;
             var blob = directory.GetBlockBlobReference(blobName);
 
             // Create a policy for accessing the defined blob
