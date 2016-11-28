@@ -250,6 +250,10 @@
     <Compile Include="Migrations\201611032348111_usertable.Designer.cs">
       <DependentUpon>201611032348111_usertable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611282203365_todoITem-update.cs" />
+    <Compile Include="Migrations\201611282203365_todoITem-update.Designer.cs">
+      <DependentUpon>201611282203365_todoITem-update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\MobileServiceContext.cs" />
     <Compile Include="Models\User.cs" />
@@ -287,6 +291,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611032348111_usertable.resx">
       <DependentUpon>201611032348111_usertable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611282203365_todoITem-update.resx">
+      <DependentUpon>201611282203365_todoITem-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

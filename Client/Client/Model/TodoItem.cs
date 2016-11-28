@@ -11,5 +11,7 @@ namespace Client.Model
     {
         public string Text { get; set; }
         public bool Complete { get; set; }
+
+        public bool Photo { get; set; }
     }
 }

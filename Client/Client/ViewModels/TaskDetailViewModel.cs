@@ -48,7 +48,7 @@ namespace Client.ViewModels
 
             try
             {
-                var table = await CloudService.GetTableAsync<TodoItem>();
+                var table = await App.CloudService.GetTableAsync<TodoItem>();
 
                 if (Item.Id == null)
                 {
@@ -58,7 +58,7 @@ namespace Client.ViewModels
                 {
                     await table.UpdateItemAsync(Item);
                 }
-                MessagingCenter.Send<TaskDetailViewModel>(this, "ItemsChanged");
+                //MessagingCenter.Send<TaskDetailViewModel>(this, "ItemsChanged");
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
             catch (Exception ex)
@@ -143,6 +143,9 @@ namespace Client.ViewModels
                 var storageUri = new Uri($"{storageToken.Uri}{storageToken.SasToken}");
                 var blobStorage = new CloudBlockBlob(storageUri);
                 await blobStorage.UploadFromStreamAsync(mediaStream);
+                Item.Photo = true;
+                IsBusy = false;
+                await ExecuteSaveCommand();
             }
             catch (Exception ex)
             {
