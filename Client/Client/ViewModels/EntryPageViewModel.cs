@@ -30,7 +30,7 @@ namespace Client.ViewModels
 
             try
             {
-                Application.Current.MainPage = new NavigationPage(new Pages.TaskList());
+                Application.Current.MainPage = new NavigationPage(new Pages.FriendPage());
             }
             catch (Exception ex)
             {

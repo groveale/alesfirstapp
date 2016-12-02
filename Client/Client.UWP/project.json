@@ -8,6 +8,7 @@
     "PCLStorage": "1.0.2",
     "WindowsAzure.Storage": "7.2.1",
     "Xam.Plugin.Media": "2.6.1",
+    "Xam.Plugin.Contacts": "2.2.0.29-beta",
     "Xam.Plugin.Connectivity": "2.3.0.37-beta",
     "Xamarin.Forms": "2.0.0.6482"
   },

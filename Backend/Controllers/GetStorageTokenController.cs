@@ -17,6 +17,8 @@ using System.Configuration;
 namespace Backend.Controllers
 {
     [Route("api/getstoragetoken")]
+    [MobileAppController]
+    [Authorize]
     public class GetStorageTokenController : ApiController
     {
         private const string connString = "MS_AzureStorageAccountConnectionString";
